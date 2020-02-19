@@ -24,6 +24,7 @@ export const featureReducer = (state = initialState, action) => {
                ...state.car,
                features: [...state.car.features, action.payload]
             },
+            additionalFeatures: state.additionalFeatures.filter(item => item.id !== action.payload.id)
          }
       case 'REMOVE_ITEM':
          return {
@@ -32,7 +33,8 @@ export const featureReducer = (state = initialState, action) => {
             car: {
                ...state.car,
                features: state.car.features.filter(item => item.id !== action.payload.id && item !== [])
-            }
+            },
+            additionalFeatures: [...state.additionalFeatures, action.payload].sort(function (a, b) { return a.id - b.id })
          }
       default:
          return state
